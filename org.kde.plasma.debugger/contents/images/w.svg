@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100%" height="100%" version="1.1"
+     baseProfile="full"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:ev="http://www.w3.org/2001/xml-events">
+<defs id="estilito">
+	<style type="text/css" id="current-color-scheme">
+<!--         -->
+		#cuadrado {
+			color:#4f100f;
+		}
+		.ColorScheme-ViewBackground {
+			color:#2f1f1f;
+		}
+        
+		#g1{
+			color:blue;
+		}
+		#g2{
+			color:red;
+		}#g3{
+			color:green;
+		}#g4{
+			color:yellow;
+		}
+	</style>
+</defs>
+<defs>
+    <radialGradient id="gdr" cx=".5" cy=".5" fx=".5" fy=".5" r=".61" >
+	<stop offset="0%" stop-color="green"/>
+	<stop offset="30%" stop-color="blue"/>
+	<stop offset="60%" stop-color="green"/>
+	<g id="g3">
+	    <stop offset="90%" stop-color="currentColor"/>
+	</g>
+    </radialGradient>
+</defs>
+ <g>
+  <circle fill="url(#gdr)" class="ColorScheme-ViewBackground" cx="40" cy="40" r="40" id="circulo"/>
+     <g transform="translate(85 10)">
+          <text width="120">
+            <tspan x="0" dy="1.2em">The gradients are</tspan>
+            <tspan x="0" dy="1.2em">customizable only in</tspan>
+            <tspan x="0" dy="1.2em"> one 'stop' element</tspan>
+          </text>
+    </g>
+  <rect style="fill:currentColor" x="99" y="99" width="77" height="77" id="cuadrado">
+      <animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="rotate" from="0 135 135" to="360 135 135" repeatCount="indefinite" dur="10s" />
+    </rect>
+ </g>
+</svg>

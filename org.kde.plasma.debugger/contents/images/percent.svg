@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="532px" height="532px" viewBox="0 0 532 532" enable-background="new 0 0 512 512" xml:space="preserve">
+    <defs>
+        <g id="porcentaje">
+            <circle cx="256" cy="256" r="224" fill="crimson"/>
+            <path d="M256,0C114.625,0,0,114.625,0,256s114.625,256,256,256s256-114.625,256-256S397.375,0,256,0z M256,480   C132.477,480,32,379.516,32,256S132.477,32,256,32c123.531,0,224,100.484,224,224S379.531,480,256,480z M225.984,175.008   c0-27.07-21.953-48.992-48.992-48.992S128,147.938,128,175.008S149.953,224,176.992,224S225.984,202.047,225.984,175.008z    M160,175.008c0-9.375,7.617-16.992,16.992-16.992s16.992,7.617,16.992,16.992S186.367,192,176.992,192S160,184.383,160,175.008z    M335,286.016c-27.062,0-48.984,21.953-48.984,48.984c0,27.047,21.922,49,48.984,49c27.078,0,49-21.953,49-49   C384,307.969,362.047,286.016,335,286.016z M335,352c-9.375,0-16.984-7.625-16.984-17s7.609-16.984,16.984-16.984   s17,7.609,17,16.984S344.375,352,335,352z M363.328,148.672c-6.234-6.242-16.391-6.242-22.625,0l-192,192   c-6.242,6.234-6.242,16.391,0,22.625C151.805,366.438,155.906,368,160,368s8.195-1.562,11.328-4.672l192-192   C369.562,165.055,369.562,154.945,363.328,148.672z"/>
+        </g>
+        <clipPath id="torta">
+            <path d="M256,0 A 256,256 -40 1 1 0,256 L 256,256"></path>
+        </clipPath>
+        <clipPath id="pedazo">
+            <path d="M256,0 A 256,256 -40 0 0 0,256 L 256,256"></path>
+        </clipPath>
+        <g id="porcentaje-partido">
+    <use xlink:href="#porcentaje" clip-path="url(#torta)" transform="translate(20 20)"></use>
+    <use xlink:href="#porcentaje" clip-path="url(#pedazo)"></use>
+        </g>
+    </defs>
+    <use xlink:href="#porcentaje-partido"></use>
+</svg>

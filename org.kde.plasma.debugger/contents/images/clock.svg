@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 400" width="200" height="400" version="1.0">
+  <defs>
+    <linearGradient id="a" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#777799"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
+    <linearGradient id="b" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="25%" style="stop-color:#b6b6cc"/>
+      <stop offset="40%" style="stop-color:#515177"/>
+      <stop offset="48%" style="stop-color:#ffffff"/>
+      <stop offset="56%" style="stop-color:#ffffff"/>
+      <stop offset="75%" style="stop-color:#8b8baa"/>
+      <stop offset="98%" style="stop-color:#efeff4"/>
+      <stop offset="100%" style="stop-color:#fbfbfc"/>
+    </linearGradient>
+    <linearGradient id="c" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#777799"/>
+    </linearGradient>
+    <radialGradient id="d" cx="49%" cy="51%" r="50%" fx="50%" fy="30%">
+      <stop offset="80%" style="stop-color:#e6e6ee" stop-opacity=".2"/>
+      <stop offset="85%" style="stop-color:#e6e6ee" stop-opacity=".30"/>
+      <stop offset="96%" style="stop-color:#b6b6cc" stop-opacity=".60"/>
+      <stop offset="100%" style="stop-color:#636388" stop-opacity=".7"/>
+    </radialGradient>
+      <radialGradient id="glow">
+          <stop offset="0" stop-color="#fff" stop-opacity="1" />
+          <stop offset="1" stop-color="#000" stop-opacity="0" />
+      </radialGradient>
+      <style id="current-color-scheme">
+          #fondo{color:white}
+      </style>
+  </defs>
+  <g transform="translate(-20 200)">
+    <circle id="fondo" cx="0" cy="0" r="169" fill="currentColor"/>
+    <circle cx="0" cy="0" r="201" fill="none" stroke="url(#b)" stroke-width="5"/>
+    <circle cx="0" cy="0" fill="none" r="182" stroke="url(#b)" stroke-width="34"/>
+    <circle cx="0" cy="0" r="170" stroke="url(#c)" stroke-width="4" fill="url(#d)"/>
+    <circle cx="0" cy="0" r="172" stroke="#ffffff" stroke-width="0.5" fill="none"/>
+    <circle cx="0" cy="0" r="193.5" stroke="#ffffff" stroke-width="0.5" fill="none"/>
+  </g>
+</svg>
