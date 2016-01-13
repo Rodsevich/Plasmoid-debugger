@@ -3,6 +3,7 @@ import QtWebKit 3.0
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4
 import org.kde.plasma.plasmoid 2.0
+import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.private.filecalendarplugin 0.1
@@ -15,11 +16,17 @@ PlasmaComponents.Page {
 //    property alias tdvw: todosView
 //    property alias evw: eventosView
 //    property alias tmt: tomate
-    property alias chsr: todochooser
+//    property alias chsr: todochooser
 
 //    PlasmaCore.ColorScope{
 //        id: colorScope
 //    }
+
+    property alias prb: svg_prueba
+
+    function _sorp(){
+        return "sorp";
+    }
 
     RowLayout{
         anchors {
@@ -27,11 +34,18 @@ PlasmaComponents.Page {
             bottom: parent.bottom
         }
 
-        ToDoChooser{
-            id: todochooser
-            width: 500
-            height: 400
+        PlasmaCore.SvgItem{
+            id: svg_prueba
+            svg: PlasmaCore.Svg{
+                imagePath: plasmoid.file("images", "w.svg")
+            }
         }
+
+//        ToDoChooser{
+//            id: todochooser
+//            width: 500
+//            height: 400
+//        }
 
 //        Tomate{
 //            width: 200
@@ -144,21 +158,25 @@ PlasmaComponents.Page {
         return tmt.main.isValid();
     }
 
-    function _retSorp(){
-        return "sorp";
-    }
+//    function _retSorp(){
+//        return "sorp";
+//    }
 
-    function _s_rorp(){
-        return "sorp";
-    }
+//    function _s_rorp(){
+//        return "sorp";
+//    }
 
-    function _cn_etSorp(){
-        return "sorp";
-    }
+//    function _cn_etSorp(){
+//        return "sorp";
+//    }
 
-    function __orp(){
-        return "sorp";
-    }
+//    function __orp(){
+//        return "sorp";
+//    }
+
+//    function _sc_colorChange(rule, color){
+//        return current.chsr.base.svg.customColorRule("#fondo","blue");
+//    }
 
 //    function guardarCalendario(){
 //        return filecal.saveCalendar();

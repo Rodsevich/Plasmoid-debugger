@@ -135,12 +135,9 @@ Item {
         }
     }
 
-    onFunctionsChanged: {
-        destroyTriggers()
-        renderTriggers()
-    }
-
     onPageChanged: {
+        functions = [];
+        destroyTriggers();
         setFunctionNames();
         renderTriggers();
     }
