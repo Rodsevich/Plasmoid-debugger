@@ -22,10 +22,14 @@ PlasmaComponents.Page {
 //        id: colorScope
 //    }
 
-    property alias prb: svg_prueba
+    property alias test: svg_prueba
 
     function _sorp(){
         return "sorp";
+    }
+
+    function _sc_colorChange(rule,color){
+        svg_prueba.svg.customColorRule(rule,color);
     }
 
     RowLayout{
