@@ -1,14 +1,22 @@
 #include "incidence.h"
 
 Incidence::Incidence(QObject *parent)
-    : QObject(parent){
+    : QObject(parent)
+{
+}
+
+Incidence::Incidence(QObject *parent, FileCalendar *calendar)
+    : Incidence(parent)
+{
+    _calendar = calendar;
 }
 
 Incidence::~Incidence(){
 }
 
-QString Incidence::escribirLongaIncidence(){
-    return *this->longa;
+QString Incidence::uid()
+{
+    return get_object()->uid();
 }
 
 QString Incidence::description(){
@@ -38,6 +46,39 @@ void Incidence::setPriority(int priority){
 QDate Incidence::creationDate(){
     KDateTime createdDT = get_object()->created();
     return createdDT.date();
+}
+
+QString Incidence::parentUid()
+{
+    return get_object()->relatedTo(KCalCore::Incidence::RelTypeParent);
+}
+
+QString Incidence::siblingUid()
+{//As the only relation supported atm is parent, I've to use a customProperty
+    return get_object()->customProperty("qmlCalendar","sibling");
+}
+
+QString Incidence::childUid()
+{//As the only relation supported atm is parent, I've to use a customProperty
+    return get_object()->customProperty("qmlCalendar","child");
+}
+
+void Incidence::setParentUid(QString uid)
+{
+    get_object()->setRelatedTo(uid, KCalCore::Incidence::RelTypeParent);
+    emit parentUidChanged();
+}
+
+void Incidence::setSiblingUid(QString uid)
+{
+    get_object()->setCustomProperty("qmlCalendar","sibling",uid);
+    emit siblingUidChanged();
+}
+
+void Incidence::setChildUid(QString uid)
+{
+    get_object()->setCustomProperty("qmlCalendar","child",uid);
+    emit childUidChanged();
 }
 
 //namespace Incidence{

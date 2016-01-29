@@ -3,6 +3,7 @@
 
 #include <QFile>
 #include <QObject>
+#include <QDebug>
 #include <QTextStream>
 #include <QQmlListProperty>
 #include <QFileSystemWatcher>
@@ -12,6 +13,7 @@
 #include "calendartodo.h"
 #include "calendarevent.h"
 
+class Incidence;
 class FileCalendar : public QObject
 {
     Q_OBJECT
@@ -24,6 +26,7 @@ public:
     Q_INVOKABLE void addEvent(CalendarEvent* event);
     Q_INVOKABLE bool loadCalendar();
     Q_INVOKABLE bool saveCalendar();
+    Q_INVOKABLE QObject* componentByUid(QString uid);
 
     QString uri();
     void setUri(QString &uri);
@@ -33,7 +36,6 @@ public:
 
     FileCalendar(QObject* parent = 0);
     ~FileCalendar();
-//    QString leer();
 
 public slots:
     void fileChangedSlot(QString file);
@@ -43,6 +45,8 @@ Q_SIGNALS:
     void fileChanged();
     void todosChanged();
     void eventsChanged();
+    void todoSortFieldChanged();
+    void sortDirectionChanged();
 
 private:
     QString _uri;

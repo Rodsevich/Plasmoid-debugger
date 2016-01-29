@@ -6,7 +6,6 @@ find_package(KF5Archive)
 
 set(SRCS
 	filecalendarplugin.cpp
-	prueba.cpp
 	filecalendar.cpp
 	incidence.cpp
 	calendartodo.cpp

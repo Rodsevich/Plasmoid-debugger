@@ -5,6 +5,7 @@
 #include <kcalcore/event.h>
 #include <QObject>
 
+class FileCalendar;
 class CalendarEvent : public Incidence
 {
     Q_OBJECT
@@ -15,7 +16,7 @@ class CalendarEvent : public Incidence
 public:
 
     CalendarEvent(QObject *parent = 0 );
-    CalendarEvent(QObject *parent, KCalCore::Event *event);
+    CalendarEvent(QObject *parent, FileCalendar *calendar, KCalCore::Event *event);
     ~CalendarEvent();
 
     QDateTime startDateTime();

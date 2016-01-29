@@ -35,7 +35,8 @@ Item {
         currentTab: pluginPage
 
         PlasmaComponents.TabButton { text: "Main workspace"; tab: mainPage; iconSource: "zoom-select-fit"}
-        PlasmaComponents.TabButton { text: "Custom plugin"; tab: pluginPage; iconSource: "plugins"}
+//        PlasmaComponents.TabButton { text: "Custom plugin"; tab: pluginPage; iconSource: "plugins"}
+        PlasmaComponents.TabButton { text: "Styles"; tab: stylePage; iconSource: "edit-paste-style"}
     }
 
     PlasmaComponents.TabGroup {
@@ -51,8 +52,12 @@ Item {
             id: mainPage
         }
 
-        PluginPage {
-            id: pluginPage
+//        PluginPage {
+//            id: pluginPage
+//        }
+
+        StylePage {
+            id: stylePage
         }
 
     }

@@ -1,20 +1,22 @@
 #include "calendartodo.h"
 
+QDateTime CalendarToDo::completedDate()
+{
+    return get_object()->completed().dateTime();
+}
+
 CalendarToDo::CalendarToDo(QObject *parent)
     : Incidence(parent){
     _object = new KCalCore::Todo();
-    longa = new QString("ANDO!! (ToDo)");
-//    QString ponga = new QString("ANDO!! (ToDo)");
-//    this->longa = &ponga;
 }
 
-CalendarToDo::CalendarToDo(QObject *parent, KCalCore::Todo *todo)
-    : Incidence(parent){
+CalendarToDo::CalendarToDo(QObject *parent, FileCalendar *calendar, KCalCore::Todo *todo)
+    : Incidence(parent, calendar){
     _object = todo;
 }
 
 CalendarToDo::~CalendarToDo(){
-    delete get_object();
+//    delete _object;
 }
 
 int CalendarToDo::percentCompleted(){
@@ -29,8 +31,20 @@ bool CalendarToDo::overdue(){
     return get_object()->isOverdue();
 }
 
-QString CalendarToDo::escribirLongaToDo(){
-    return *this->longa;
+bool CalendarToDo::completed(){
+    return get_object()->isCompleted();
+}
+
+void CalendarToDo::setCompleted(bool completed)
+{
+    get_object()->setCompleted(completed);
+    emit completedChanged();
+}
+
+void CalendarToDo::setCompletedDate(QDateTime completedDate)
+{
+    get_object()->setCompleted(new KDateTime(completedDate));
+    emit completedDateChanged();
 }
 
 KCalCore::Todo *CalendarToDo::get_object()

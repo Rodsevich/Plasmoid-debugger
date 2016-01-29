@@ -20,10 +20,11 @@ bool FileCalendar::loadCalendar()
 {
     if ( ! (_uri.endsWith(".ics") || _uri.endsWith(".vcs")))
         return false;
-    if(!_storage)
-        _storage = new KCalCore::FileStorage( _calendar, _uri );
-    else
-        _storage->setFileName(_uri);
+    if(_storage)
+        delete _storage;
+    if(_calendar)
+        _calendar->close();
+    _storage = new KCalCore::FileStorage( _calendar, _uri );
 
     bool ret = _storage->load();
     if( ret ){
@@ -40,7 +41,7 @@ void FileCalendar::reloadEvents()
     CalendarEvent *evt;
     listEvents.clear();
     for(int i = 0; i < events.count(); i++){
-        evt = new CalendarEvent(this->parent(), &*events[i]);
+        evt = new CalendarEvent(this->parent(), this, &*events[i]);
         listEvents.append(evt);
     }
     emit eventsChanged();
@@ -52,7 +53,7 @@ void FileCalendar::reloadTodos()
     KCalCore::Todo::List todos(_calendar->todos());
     CalendarToDo *ctd;
     for(int i = 0; i < todos.count(); i++){
-        ctd = new CalendarToDo(this->parent(), &*todos[i]);
+        ctd = new CalendarToDo(this->parent(), this, &*todos[i]);
         listToDos.append(ctd);
     }
     emit todosChanged();
@@ -61,6 +62,16 @@ void FileCalendar::reloadTodos()
 bool FileCalendar::saveCalendar()
 {
     return _storage->save();
+}
+
+QObject* FileCalendar::componentByUid(QString uid)
+{
+    for (int i = 0; i < listToDos.size(); i++) {
+        if (listToDos.at(i)->uid() == uid){
+           return listToDos.at(i);
+        }
+    }
+    return nullptr;
 }
 
 QString FileCalendar::uri()
@@ -111,9 +122,9 @@ FileCalendar::~FileCalendar(){
 
 void FileCalendar::fileChangedSlot(QString file)
 {
+    qDebug() << "el slot funca";
     Q_UNUSED(file);
-    reloadEvents();
-    reloadTodos();
+    emit fileChanged();
 }
 
 void FileCalendar::append_todo(QQmlListProperty<CalendarToDo> *list, CalendarToDo *todo)

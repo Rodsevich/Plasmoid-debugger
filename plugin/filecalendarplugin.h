@@ -1,12 +1,12 @@
 #ifndef FILECALENDARPLUGIN_H
-#define PRUEBALUGIN_H
+#define FILECALENDARPLUGIN_H
 
 #include <QQmlExtensionPlugin>
-#include "prueba.h"
-#include "filecalendar.h"
+//#include "prueba.h"
 #include "incidence.h"
 #include "calendartodo.h"
 #include "calendarevent.h"
+#include "filecalendar.h"
 
 class FileCalendarPlugin : public QQmlExtensionPlugin
 {

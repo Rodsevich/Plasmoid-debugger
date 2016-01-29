@@ -5,7 +5,9 @@ import QtQuick.Controls 1.4
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.extras 2.0 as PlasmaExtras
+import org.kde.kquickcontrols 2.0 as KQuickControls
 import org.kde.plasma.components 2.0 as PlasmaComponents
+
 import org.kde.plasma.private.filecalendarplugin 0.1
 
 PlasmaComponents.Page {
@@ -23,13 +25,47 @@ PlasmaComponents.Page {
 //    }
 
     property alias test: svg_prueba
+    property alias tdl: todosList
+    property alias lab: labe
+    property alias tx: texto
 
-    function _sorp(){
-        return "sorp";
+    function _loadCalendar(){
+        return todosList.fc.loadCalendar();
     }
 
-    function _sc_colorChange(rule,color){
-        svg_prueba.svg.customColorRule(rule,color);
+    function _abrirDialog(){
+        current.tdl.children[1].open();
+    }
+
+    function _n_editarToDo(num){
+        current.tdl.children[1].edit(current.tdl.modelo.todos[num]);
+    }
+
+    function _funca(){
+        return [12, 5, 8, 130, 44].filter(function(q){return q < 9});
+    }
+
+    function _s_cambiarUid(uid){
+        tdl.modelo.currentParentUid = uid;
+        return "puesto el UID de "+tdl.fc.componentByUid(uid).summary;
+    }
+
+    function _todosUIDs(){
+        var pp = tdl.fc.todos;
+        var ret = "";
+        for(var i in pp){
+            ret += pp[i].summary+": "+pp[i].uid+"\n";
+        }
+        return ret;
+    }
+    function _todosLenght(){
+        return tdl.fc.todos.length;
+    }
+    function _Mtodos(){
+        return tdl.modelo.todos;
+    }
+    function _MtodosLenght(){
+        return tdl.modelo.todos.length;
     }
 
     RowLayout{
@@ -45,6 +81,30 @@ PlasmaComponents.Page {
             }
         }
 
+        Column{
+            PlasmaComponents.Label {
+                id: labe
+                width: 200
+                height: 30
+                text: texto.text
+                textFormat: Text.StyledText
+            }
+            PlasmaComponents.TextField{
+                id: texto
+                width: 300
+                height: 30
+            }
+            KQuickControls.ColorButton{
+                id: elegidorDeColor
+                dialogTitle: "elegi un color"
+                showAlphaChannel: true
+                color: "#0000FF"
+            }
+            PlasmaComponents.Label{
+                text: "Mirá ma, me están cambiando!"
+                color: elegidorDeColor.currentColor
+            }
+        }
 //        ToDoChooser{
 //            id: todochooser
 //            width: 500
@@ -57,9 +117,29 @@ PlasmaComponents.Page {
 //            id: tomate
 //        }
 
-//        ToDosList{
-//            id: todosList
+//        ListView{
+//            id: todosView
+//            cacheBuffer: 4
+//            model: 80
+//            delegate: PlasmaComponents.ListItem{
+//                enabled: true
+//                height: 30
+//                width: parent.width
+//                PlasmaComponents.Label {
+//                    text: "Sorpi"
+//                    textFormat: Text.StyledText
+//                }
+//            }
 //        }
+
+        ToDosList{
+            id: todosList
+            width: 250
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+            }
+        }
 
 //        ListView{
 //            id: eventosView
@@ -82,116 +162,28 @@ PlasmaComponents.Page {
 //        PlasmaComponents.Button { text: "Bottom" }
 //    }
 
-////    ListView {
-////        id: list
-////        model: 5
-////        spacing: 3
-////        width: 100
-////        anchors.top: parent.top
-////        anchors.bottom: parent.bottom
+//    ListView {
+//        id: list
+//        model: 5
+//        spacing: 3
+//        width: 100
+//        anchors.top: parent.top
+//        anchors.bottom: parent.bottom
 
-////        delegate: Rectangle {
-////            id: delegado
-////            width: parent.width
-////            height: 50
-////            border.color: theme.buttonTextColor
-////            color: theme.buttonBackgroundColor
+//        delegate: Rectangle {
+//            id: delegado
+//            width: parent.width
+//            height: 50
+//            border.color: theme.buttonTextColor
+//            color: theme.buttonBackgroundColor
 
-////            Label{
-////                anchors.centerIn: parent
-////                text: "Cuadrado "+ index
-////                color: theme.buttonTextColor
-////                fontSizeMode: Text.HorizontalFit
-////            }
-////        }
-////    }
-
-//    CalendarEvent{
-//        id: evento
-//        startDateTime: new Date()
-//        endDateTime: new Date().setHours(new Date().getHours() + 1)
-//        summary: "Evento Longa"
+//            Label{
+//                anchors.centerIn: parent
+//                text: "Cuadrado "+ index
+//                color: theme.buttonTextColor
+//                fontSizeMode: Text.HorizontalFit
+//            }
+//        }
 //    }
-
-//    FileCalendar{
-//        id: filecal
-//        uri: "/home/nico/src/calendario/build/dummy.ics"
-//    }
-
-//    CalendarToDo{
-//        id: todo
-//        summary: "Hacer un Longa"
-//        percentCompleted: 10
-//    }
-
-//    function intercambiarSVG(){
-//        tomate.intercambiarSVG();
-//    }
-
-//    function cambiarElemento(elem){
-//        tomate.tmt.elementId = elem;
-//    }
-
-    function recargarSVG(){
-        tomate.main.customColorRule("#circulo","orange");
-        tomate.main.customColorRule("#cuadrado","yellow");
-        var ip = tomate.main.imagePath;
-        tomate.main.imagePath = "sorp";
-        tomate.main.imagePath = ip;
-        return JSON.stringify(tomate.main.customColorScheme);
-    }
-
-    function agregarColor(regla, color){
-        return tomate.main.customColorRule(regla,color);
-    }
-
-    function cambiarColorGroup(num){
-        return tomate.main.colorGroup = num;
-    }
-
-    function cambiarCuadrado(color){
-        return tomate.main.customColorRule("#cuadrado",color);
-    }
-
-    function setearClock(){
-        setearSVG("clock");
-    }
-
-    function setearSVG(src){
-        tmt.main.imagePath = "/home/nico/.local/share/plasma/plasmoids/org.kde.pruebas/contents/images/" + src + ".svg";
-        return tmt.main.isValid();
-    }
-
-//    function _retSorp(){
-//        return "sorp";
-//    }
-
-//    function _s_rorp(){
-//        return "sorp";
-//    }
-
-//    function _cn_etSorp(){
-//        return "sorp";
-//    }
-
-//    function __orp(){
-//        return "sorp";
-//    }
-
-//    function _sc_colorChange(rule, color){
-//        return current.chsr.base.svg.customColorRule("#fondo","blue");
-//    }
-
-//    function guardarCalendario(){
-//        return filecal.saveCalendar();
-//    }
-
-//    function agregarToDo(){
-//        return filecal.addTodo(todo);
-//    }
-//    function agregarevento(){
-//        return filecal.addEvent(evento);
-//    }
-
 
 }
