@@ -2,7 +2,6 @@ import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles.Plasma 2.0 as Styles
-
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.components 2.0 as PlasmaComponents
@@ -15,11 +14,11 @@ import org.kde.plasma.components 2.0 as PlasmaComponents
 */
 
 import "../code/logic.js" as Logic
-import "../code/localStorage.js" as DB
 
 Item {
-    id: main
-    property alias exp: explorer
+    id: root
+
+    property alias main: root
 
     PlasmaComponents.TabBar {
         id: tabBar
@@ -32,11 +31,12 @@ Item {
         }
         tabPosition: Qt.RightEdge
 
-        currentTab: pluginPage
+        currentTab: mainPage
 
         PlasmaComponents.TabButton { text: "Main workspace"; tab: mainPage; iconSource: "zoom-select-fit"}
+        PlasmaComponents.TabButton { text: "Sarasa"; tab: sarasa; iconSource: "labplot-xy-equation-curve"}
 //        PlasmaComponents.TabButton { text: "Custom plugin"; tab: pluginPage; iconSource: "plugins"}
-        PlasmaComponents.TabButton { text: "Styles"; tab: stylePage; iconSource: "edit-paste-style"}
+//        PlasmaComponents.TabButton { text: "Styles"; tab: stylePage; iconSource: "edit-paste-style"}
     }
 
     PlasmaComponents.TabGroup {
@@ -52,21 +52,21 @@ Item {
             id: mainPage
         }
 
+        Sarasa{
+            id: sarasa
+        }
+
 //        PluginPage {
 //            id: pluginPage
 //        }
 
-        StylePage {
-            id: stylePage
-        }
+//        StylePage {
+//            id: stylePage
+//        }
 
     }
 
     property alias current: tabGroup.currentTab
-
-    function debug(longa){
-        Logic.debug(longa);
-    }
 
     VariablesExplorer{
         id: explorer
@@ -88,11 +88,12 @@ Item {
         horizontalAlignment: TextInput.AlignHCenter
         placeholderText: "This will be debugged"
         Keys.onPressed: {
-                if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
-                    Logic.debug(eval(this.text));
-                    selectAll();
-                    event.accepted = true;
-                }
+            if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
+//                debugOutput.text = eval(this.text) + "\n" + debugOutput.text;
+                Logic.debug(eval(this.text));
+                selectAll();
+                event.accepted = true;
+            }
         }
     }
 
@@ -108,8 +109,15 @@ Item {
         page: current
     }
 
+    property alias debugOutput: debugOutputItem
+    property alias funcTri: functionTriggers
+
+    function debug(obj){
+        Logic.debug(obj);
+    }
+
     TextArea {
-        id: debugOutput
+        id: debugOutputItem
         anchors {
             right: main.right
             top: commandLine.bottom
@@ -117,17 +125,12 @@ Item {
         }
         readOnly: true
         width: main.width / 3
-
-        Button{
-            text: "Borrar todo"
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            onClicked: {
-                debugOutput.text = '';
-            }
-        }
     }
 
+    Component.onCompleted: {
+        Logic.root = root;
+        Logic.plasmoid = plasmoid;
+    }
 //    Component.onCompleted: Logic.debug("LONGA");
 //    DataEngine que explore el teclado apra ejecutar:
 //    F6 --> borrar output

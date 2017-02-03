@@ -13,11 +13,20 @@ Item {
         var members = Logic.stringify(obj).split(',');
         for (var i in members){
             members[i] = members[i].replace(/["} {]/g, "");
-            var data = {
-                propertyName: members[i],
-                type: typeof obj[members[i]]
+            var data = {};
+            data.propertyName = members[i];
+            if(typeof obj[members[i]] !== "object"){
+                data.type = typeof obj[members[i]];
+                data.value = obj[members[i]]+""; //convert to string
+            }else{
+                if(/^#[0-9a-fA-F]{6}$/.exec(obj[members[i]])){
+                    data.type = "color";
+                    data.value = "<font color='"+obj[members[i]]+"'><b>"+obj[members[i]]+"</b></font>";
+                }else{
+                    data.type = "object";
+                    data.value = "{}";
+                }
             }
-            data.value = data.type === "object" ? "{}" : obj[members[i]]+""; //convert to string
 
             explorerModel.append(data);
         }
@@ -71,7 +80,8 @@ Item {
         "number":"depth16to8",
         "function":"im-facebook",
         "boolean":"format-text-bold",
-        "string":"TeX_logo",
+        "string":"format-text-strikethrough",//"labplot-TeX-logo",
+        "color":"color-management",
         "undefined":"edit-delete"
     }
 
@@ -81,6 +91,7 @@ Item {
         "function":"#DD3",
         "boolean":"#AEB",
         "string":"#BCE",
+        "color":"CFE",
         "undefined":"#AAA"
     }
 

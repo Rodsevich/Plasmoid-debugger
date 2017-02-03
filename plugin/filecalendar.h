@@ -10,6 +10,7 @@
 #include <kcalcore/calendar.h>
 #include <kcalcore/filestorage.h>
 #include <kcalcore/memorycalendar.h>
+#include <kcalcore/icalformat.h>
 #include "calendartodo.h"
 #include "calendarevent.h"
 
@@ -27,6 +28,7 @@ public:
     Q_INVOKABLE bool loadCalendar();
     Q_INVOKABLE bool saveCalendar();
     Q_INVOKABLE QObject* componentByUid(QString uid);
+    Q_INVOKABLE bool deleteIncidenceByUid(QString uid);
 
     QString uri();
     void setUri(QString &uri);
@@ -38,7 +40,7 @@ public:
     ~FileCalendar();
 
 public slots:
-    void fileChangedSlot(QString file);
+    void fileChangedSlot();
 
 Q_SIGNALS:
     void uriChanged();
@@ -52,9 +54,10 @@ private:
     QString _uri;
     KCalCore::MemoryCalendar::Ptr _calendar;
     KCalCore::FileStorage* _storage = 0;
-    QFileSystemWatcher _watcher;
-    QList<CalendarToDo*> listToDos;
+//    KCalCore::FileStorage::Ptr _storage;
     QList<CalendarEvent*> listEvents;
+    QList<CalendarToDo*> listToDos;
+    QFileSystemWatcher _watcher;
 
     void reloadEvents();
     void reloadTodos();

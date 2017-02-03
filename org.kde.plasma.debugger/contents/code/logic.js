@@ -1,3 +1,6 @@
+//Debug functions
+
+var root,plasmoid;
 
 function replacer(key, value) {
   if (value === null)
@@ -26,7 +29,7 @@ function stringify(obj){
 }
 
 function debug(str, tty){
-    tty = typeof tty !== undefined ? tty : false;
+    tty = typeof tty !== "undefined" ? tty : true;
     if (tty){
         print(str);
         console.trace();
@@ -34,68 +37,7 @@ function debug(str, tty){
 //    if(plasmoid){
 //        plasmoid.rootItem.debugOutput.text += str + "    ---- funcando con plasmoid.rootItem\n";
 //    }else
-        debugOutput.text = str + "\n" + debugOutput.text;
+    if(/org\.kde\.plasma\.debugger/.test(plasmoid.file('')))//this is the debugger
+        root.debugOutput.text = str + "\n" + root.debugOutput.text;
 }
 
-
-//function dialogAlerta(msg) {
-//    dialogLoader.active = true;
-//    dialogLoader.setSource("DialogContent.qml");
-//    dialogLoader.item.titleText = "Alert!";
-//    dialogLoader.item.messageText = msg;
-//    dialogLoader.item.rejectButton = "";
-//    dialogLoader.item.closeButton = "cerrar";
-//    dialogLoader.item.acceptButton = "Understood";
-//    dialogLoader.item.closed.connect(function(){ dialogLoader.active = false; });
-//    enlazarBorrados();
-//    dialogLoader.item.open();
-//}
-
-//function cerrarTodo(){
-//    ponga.text = "deberia cerrar";
-//    dialogLoader.active = false;
-////    dialogLoader.source = "";
-//}
-
-//function enlazarBorrados(){
-//    dialogLoader.item.closed.connect(cerrarTodo);
-//    dialogLoader.item.accepted.connect(cerrarTodo);
-//    dialogLoader.item.rejected.connect(cerrarTodo);
-//}
-
-//function dialogEleccion(msg) {
-//    dialogLoader.active = true;
-//    dialogLoader.setSource("DialogContent.qml",{
-//                               "titleText":"Dialoguito",
-//                               "messageText":msg,
-//                               "rejectButton":"rechazar",
-//                               "closeButton":"cerrame",
-//                           });
-//    dialogLoader.item.closed.connect(function(){ dialogLoader.active = false; });
-//    dialogLoader.item.open();
-//}
-
-//function p(obj){
-//    print(obj);
-////    plasmoid.fullRepresentation.name.text = obj;
-//}
-
-//function dialogAlert(msg) {
-////    print(Plasmoid);
-////    print(plasmoid);
-////    print(Plasmoid.fullRepresentation);
-////    print(plasmoid.fullRepresentation);
-////    p(dialogLoader);
-//    print(dialogLoader);
-//    var dialogLoader = Qt.createQmlObject('import QtQuick 2.5; Loader {}',
-//        plasmoid.fullRepresentation, "dynamicLoader");
-//    dialogLoader.onLoaded.connect(function(){
-//        dialogLoader.item.onStatusChanged.connect(function unloadDialog(){
-//            if (dialogLoader.item.status == PlasmaComponents.DialogStatus.Closed)
-//                dialogLoader.source = "";
-//        });
-//        dialogLoader.item.open();
-//    });
-//    dialogLoader.setSource("Dialogs/Alert.qml", {"messageText":msg});
-//    cosoFull.name.text = dialogLoader.status;
-//}

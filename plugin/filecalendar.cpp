@@ -18,16 +18,16 @@ void FileCalendar::addEvent(CalendarEvent *event)
 
 bool FileCalendar::loadCalendar()
 {
-    if ( ! (_uri.endsWith(".ics") || _uri.endsWith(".vcs")))
+    if ( ! _uri.endsWith(".ics"))
         return false;
-    if(_storage)
-        delete _storage;
-    if(_calendar)
-        _calendar->close();
-    _storage = new KCalCore::FileStorage( _calendar, _uri );
 
-    bool ret = _storage->load();
-    if( ret ){
+//    _calendar.create(KDateTime::UTC);//(new KCalCore::MemoryCalendar( KDateTime::UTC ));
+////    _storage(new KCalCore::FileStorage( _calendar, _uri, new KCalCore::ICalFormat()));
+////    _storage.create( _calendar, _uri, new KCalCore::ICalFormat());
+//    _storage = new KCalCore::FileStorage( _calendar, _uri, new KCalCore::ICalFormat());//.create(;
+
+    _calendar->close();
+    if( _storage->load() ){
         reloadEvents();
         reloadTodos();
         return true;
@@ -37,7 +37,7 @@ bool FileCalendar::loadCalendar()
 
 void FileCalendar::reloadEvents()
 {
-    KCalCore::Event::List events(_calendar->events(QDate::currentDate()));
+    KCalCore::Event::List events(_calendar->rawEventsForDate(QDate::currentDate()));
     CalendarEvent *evt;
     listEvents.clear();
     for(int i = 0; i < events.count(); i++){
@@ -50,7 +50,7 @@ void FileCalendar::reloadEvents()
 void FileCalendar::reloadTodos()
 {
     listToDos.clear();
-    KCalCore::Todo::List todos(_calendar->todos());
+    KCalCore::Todo::List todos(_calendar->rawTodos(KCalCore::TodoSortPriority, KCalCore::SortDirectionAscending));
     CalendarToDo *ctd;
     for(int i = 0; i < todos.count(); i++){
         ctd = new CalendarToDo(this->parent(), this, &*todos[i]);
@@ -74,6 +74,23 @@ QObject* FileCalendar::componentByUid(QString uid)
     return nullptr;
 }
 
+bool FileCalendar::deleteIncidenceByUid(QString uid)
+{
+    KCalCore::Incidence::Ptr incidence(_calendar->incidence(uid));
+    if(_calendar->deleteIncidence(incidence)){
+        switch(incidence->type()){
+            case KCalCore::Incidence::TypeTodo:
+                delete componentByUid(uid);
+                reloadTodos();
+            break;
+            case KCalCore::Incidence::TypeEvent:
+                reloadEvents();
+        }
+        return true;
+    }else
+        return false;
+}
+
 QString FileCalendar::uri()
 {
     return _uri;
@@ -85,6 +102,7 @@ void FileCalendar::setUri(QString &uri)
         _watcher.removePath(_uri);
         _watcher.addPath(uri);
         _uri = uri;
+        _storage->setFileName(uri);
         emit uriChanged();
         loadCalendar();
     }
@@ -111,19 +129,20 @@ QQmlListProperty<CalendarEvent> FileCalendar::events()
 FileCalendar::FileCalendar(QObject* parent)
     : QObject(parent)
     , _calendar( new KCalCore::MemoryCalendar( KDateTime::UTC ) )
+    , _storage(new KCalCore::FileStorage( _calendar, _uri, new KCalCore::ICalFormat()))
 {
-        QObject::connect(&this->_watcher, SIGNAL(fileChanged(QString)),
-                            this, SLOT(fileChangedSlot(QString)));
+    QObject::connect(&this->_watcher, SIGNAL(fileChanged(QString)),
+                     this, SLOT(fileChangedSlot()));
 }
 
 FileCalendar::~FileCalendar(){
 
 }
 
-void FileCalendar::fileChangedSlot(QString file)
+void FileCalendar::fileChangedSlot()
 {
-    qDebug() << "el slot funca";
-    Q_UNUSED(file);
+    _watcher.removePath(_uri);
+    _watcher.addPath(_uri);
     emit fileChanged();
 }
 

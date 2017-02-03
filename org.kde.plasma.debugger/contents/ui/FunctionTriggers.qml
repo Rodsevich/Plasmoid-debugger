@@ -13,9 +13,12 @@ Item {
 
     function updateFunctionName(index){
         var str = components[index].funcion + "( ";
-        for(var i in components[index].arguments){
-            str += components[index].arguments[i].text;
-            if(i == components[index].arguments.length - 1)
+        for(var arg in components[index].arguments){
+            if(components[index].arguments[arg].placeholderText != "number") str += '"';
+            console.log(arg);
+            str += components[index].arguments[arg].text;
+            if(components[index].arguments[arg].placeholderText != "number") str += '"';
+            if(arg == components[index].arguments.length - 1)
                 str += " )";
             else
                 str += ", ";
@@ -88,7 +91,7 @@ Item {
 
     function setFunctionNames(){
         //Can't do much becoase of bug https://bugreports.qt.io/browse/QTBUG-46122
-        var func,name,paramsStr,arguments,
+        var func,name,paramsStr,arguments,index = 0,
                 members = Logic.stringify(page).split(','),
                 displayableFunction = /^_/,
                 param, re = /[nsc_]/; //RegExp used to match implicit parameters additions
@@ -99,7 +102,7 @@ Item {
             if( ! displayableFunction.test(name) )
                 continue;
             if (typeof page[name] == "function"){
-                //If it has implicit parameters
+                //If it has explicit parameters
                 paramsStr = "";
                 if(/^_.+_/.test(name)){
                     func = name.replace(/^_/,""); //name of function without _
@@ -125,7 +128,7 @@ Item {
                     }
                 }
                 functions[name] = paramsStr;
-//                fnStr = page[members[i]].toString();//Doesn't woks becoase of bug
+//                fnStr = page[members[i]].toString();//Doesn't woks because of bug
 //                //Took from here http://stackoverflow.com/questions/1007981/how-to-get-function-parameter-names-values-dynamically-from-javascript
 //                arguments = fnStr.slice(fnStr.indexOf('(')+1, fnStr.indexOf(')')).match(/([^\s,]+)/g);
 //                if(arguments === null)

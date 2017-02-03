@@ -44,10 +44,85 @@ import QtQuick.Controls.Styles 1.0
 import QtQuick.Particles 2.0
 import QtQuick.Layouts 1.0
 
+import QtQuick.Controls 1.4 as QtControls
+import org.kde.plasma.core 2.0 as PlasmaCore
+import QtQuick.Controls.Styles 1.4 as QtControlsStyles
+import org.kde.plasma.components 2.0 as PlasmaComponents
+import "Components"
+
 Item {
     id: root
     width: 300
     height: 200
+
+    Timer{
+        interval: 1000
+        repeat: true
+        running: true
+        onTriggered: slide.value = (slide.value >= 100) ? 0: slide.value+1;
+    }
+
+    property alias sld: slide
+    TomateSlider{
+        id: slide
+        minValue: 0
+        maxValue: 100
+        value: 35
+        width: 400
+        x: 100
+        y: 100
+    }
+
+
+    PlasmaComponents.Slider{
+        id: sld
+        value: .3
+        width: 400
+        y: 100
+    }
+
+    QtControls.ProgressBar{
+        onValueChanged: style.msj = value+"sorp"
+        width: 400
+        value: sld.value
+        y: 300
+        style: QtControlsStyles.ProgressBarStyle{
+//                    panel: Rectangle{ color: "green"}
+            property real cMax: control.maximumValue
+            property real cMin: control.minimumValue
+            property real cVal: control.value
+            property real prgs: cVal / (cMax - cMin)
+            property string msj: "sorpi"
+            background: Item{
+                id: fondo
+                implicitHeight: theme.mSize(theme.defaultFont).height * 1.6
+                implicitWidth: 300
+
+                Rectangle{
+                    id: backgroundFig
+                    color: "blue"
+                    anchors.fill: parent
+                }
+                PlasmaComponents.Label{
+                    anchors.left: backgroundFig.left
+                    color: "red"
+                    text: 1 - sld.value
+                }
+            }
+            progress: Item{
+                Rectangle{
+                    id: progressFig
+                    color: "yellow"
+                    anchors.fill: parent
+                }
+                PlasmaComponents.Label{
+                    color: "red"
+                    anchors.right: progressFig.right
+                    text: sld.value
+                }
+            }
+        }
+    }
 
     property int columnWidth: 120
     GridLayout {

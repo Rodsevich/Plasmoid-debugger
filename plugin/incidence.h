@@ -18,6 +18,7 @@ class Incidence : public QObject
     Q_PROPERTY(QString parentUid READ parentUid WRITE setParentUid NOTIFY parentUidChanged)
     Q_PROPERTY(QString siblingUid READ siblingUid WRITE setSiblingUid NOTIFY siblingUidChanged)
     Q_PROPERTY(QString childUid READ childUid WRITE setChildUid NOTIFY childUidChanged)
+    Q_PROPERTY(QStringList categories READ categories WRITE setCategories NOTIFY categoriesChanged)
 
 public:
 
@@ -48,6 +49,18 @@ public:
 
     virtual KCalCore::Incidence* get_object() = 0;
 
+    QStringList categories()
+    {
+        return get_object()->categories();
+    }
+
+public slots:
+    void setCategories(QStringList categories)
+    {
+        get_object()->setCategories(categories);
+        emit categoriesChanged(categories);
+    }
+
 Q_SIGNALS:
     void descriptionChanged();
     void priorityChanged();
@@ -55,6 +68,8 @@ Q_SIGNALS:
     void siblingUidChanged();
     void parentUidChanged();
     void childUidChanged();
+
+    void categoriesChanged(QStringList categories);
 
 protected:
     FileCalendar* _calendar;

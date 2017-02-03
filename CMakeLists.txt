@@ -8,6 +8,7 @@ set(KF5_MIN_VERSION "5.0.0")
 
 find_package(ECM REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_MODULE_DIR} ${ECM_KDE_MODULE_DIR})
+set(CMAKE_BUILD_TYPE "Debug")
 
 include(KDEInstallDirs)
 include(KDECompilerSettings)

@@ -14,4 +14,4 @@ fi
 kdialog --passivepopup "Running plasmawindowed '$nombre_real_instalacion'..." 2
 kbuildsycoca5
 killall plasmawindowed
-plasmawindowed "$nombre_real_instalacion" 2>&1 | tee ~/.cache/ver_plasmoide.out
+plasmawindowed "$nombre_real_instalacion" 2>&1 | tee ~/.cache/plasmoid_debugger.out
