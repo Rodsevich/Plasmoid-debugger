@@ -1,41 +1,51 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.private.filecalendarplugin 0.1
+
+import "Components"
 
 PlasmaComponents.Page {
 
-    property alias rectangle: rectangulo
-    property alias rect_text: texto
+    //boilerplate debugger
 
-    function _nn_setSizes(h,w){
-        rectangulo.height = h;
-        rectangulo.width = w;
-        return "Rectangle now has " + h + "x" + w;
+    property alias evento: ev
+
+    property date start: addMinutes(new Date(), 3)
+    property date end: addMinutes(new Date(), 23)
+
+    CalendarEvent{
+        id: ev
+        summary: "sumario"
+        description: "descripcion"
+        startDateTime: start
+        endDateTime: end
     }
 
-    function _c_setColor(col){
-        rectangulo.color = col;
-        return "Rectangle now is " + col;
+    function addMinutes(date, minutes){
+        date.setMinutes(date.getMinutes() + minutes);
+        return date;
     }
 
-    Rectangle{
-        id: rectangulo
-        y: 100
-        color: "yellow"
-        width: 300
-        height: 200
+    //Para pasar a TomaToDoING
+
+    property QtObject cal: FileCalendar{
+        id: cal
+        uri: "/home/nico/.local/share/TomaToDoING/data.ics"
     }
 
-    Label{
-        id: texto
-        anchors.centerIn: rectangulo
-        text: "LABEL"
-        color: "blue"
+    CalendarEventUI{
+        y: 50
+        width: parent.width * 0.85
+        calendar: cal
     }
 
-    Label{
-        anchors.bottom: rectangulo.bottom
-        color: black
-        text: "Access this rectangle with current.rectangle\n and it's label with current.rect_text"
-    }
+//    PlasmaComponents.TextField{
+//        id: sorp
+//        anchors.top: .bottom
+//        width: fondoTexto.width
+//        text: "SORPISORPI SORPISORPI SORPISORPI SORPISORPI SORPISORPI SORPISORPI SORPISORPI SORPISORPI SORPISORPI SORPISORPI SORPISORPI SORPISORPI SORPISORPI SORPISORPI "
+//    }
+
+    Component.onCompleted: cal.addEvent(ev)
 }

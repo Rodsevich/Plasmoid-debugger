@@ -55,37 +55,18 @@ Item {
     width: 300
     height: 200
 
-    Timer{
-        interval: 1000
-        repeat: true
-        running: true
-        onTriggered: slide.value = (slide.value >= 100) ? 0: slide.value+1;
-    }
-
-    property alias sld: slide
-    TomateSlider{
-        id: slide
-        minValue: 0
-        maxValue: 100
-        value: 35
-        width: 400
-        x: 100
-        y: 100
-    }
-
-
     PlasmaComponents.Slider{
         id: sld
         value: .3
         width: 400
-        y: 100
+        y: 300
     }
 
     QtControls.ProgressBar{
         onValueChanged: style.msj = value+"sorp"
         width: 400
         value: sld.value
-        y: 300
+        y: 325
         style: QtControlsStyles.ProgressBarStyle{
 //                    panel: Rectangle{ color: "green"}
             property real cMax: control.maximumValue
