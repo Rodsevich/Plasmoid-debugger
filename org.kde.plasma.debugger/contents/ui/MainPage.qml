@@ -34,7 +34,31 @@ PlasmaComponents.Page {
         uri: "/home/nico/.local/share/TomaToDoING/data.ics"
     }
 
+    function _arrancar(){
+        cartel.contador.start();
+    }
+
+    function _rearrancar(){
+        cartel.contador.restart();
+    }
+
+    function _estado(){
+        return cartel.contador.running;
+    }
+
+    function _runTrue(){
+        cartel.contador.running = true;
+        return cartel.contador.running;
+    }
+
+    function _runFalse(){
+        cartel.contador.running = false;
+        return cartel.contador.running;
+    }
+
+    property alias cartel: cartelito
     CalendarEventUI{
+        id: cartelito
         y: 50
         width: parent.width * 0.85
         calendar: cal
