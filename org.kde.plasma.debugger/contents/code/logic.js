@@ -37,7 +37,7 @@ function debug(str, tty){
 //    if(plasmoid){
 //        plasmoid.rootItem.debugOutput.text += str + "    ---- funcando con plasmoid.rootItem\n";
 //    }else
-//    if(/org\.kde\.plasma\.debugger/.test(plasmoid.file('')))//this is the debugger
+    if(/org\.kde\.plasma\.debugger/.test(plasmoid.file('')))//this is the debugger
         root.debugOutput.text = str + "\n" + root.debugOutput.text;
 }
 

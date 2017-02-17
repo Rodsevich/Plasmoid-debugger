@@ -35,7 +35,6 @@ Item {
 
         PlasmaComponents.TabButton { text: "Main workspace"; tab: mainPage; iconSource: "zoom-select-fit"}
         PlasmaComponents.TabButton { text: "Sarasa"; tab: sarasa; iconSource: "labplot-xy-equation-curve"}
-//        PlasmaComponents.TabButton { text: "Events autostarter"; tab: eventsAutoStarter; iconSource: "plugins"}
 //        PlasmaComponents.TabButton { text: "Custom plugin"; tab: pluginPage; iconSource: "plugins"}
 //        PlasmaComponents.TabButton { text: "Styles"; tab: stylePage; iconSource: "edit-paste-style"}
     }
@@ -56,10 +55,6 @@ Item {
         Sarasa{
             id: sarasa
         }
-
-//        EventsAutoStarterPage{
-//            id: eventsAutoStarter
-//        }
 
 //        PluginPage {
 //            id: pluginPage
@@ -128,7 +123,6 @@ Item {
             top: commandLine.bottom
             bottom: main.bottom
         }
-        textFormat: TextEdit.RichText
         readOnly: true
         width: main.width / 3
     }
